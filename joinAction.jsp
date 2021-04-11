@@ -51,7 +51,6 @@
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("location.href = 'main.jsp'"); //완료되면 메인페이지로 돌아감.
-				script.println("history.back()");
 				script.println("</script>");
 			}
 

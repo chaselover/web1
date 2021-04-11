@@ -46,9 +46,9 @@ public class UserDAO {
 	}
 	
 	public int join(User user) { //User클래스를 통해 만들어지는 하나의 인스턴스
-		String SQL = "INSERT INTO user VALUES (?, ?, ?, ?, ?)";
+		String SQL = "INSERT INTO USER VALUES (?,?,?,?,?)";
 		try {
-			pstmt = conn.prepareStatement(SQL);
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, user.getUserID());
 			pstmt.setString(2, user.getUserPassword());
 			pstmt.setString(3, user.getUserName());
