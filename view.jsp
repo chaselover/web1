@@ -9,6 +9,7 @@
 <meta http-equiv="Content-Type" charset="UTF-8">
 <meta name = "viewport" content="width-device-width" initial-scale="1">
 <link rel="stylesheet" href = "css/bootstrap.css">
+<link rel="stylesheet" href = "css/custom.css">
 <title>JSP 게시판 웹사이트</title>
 </head>
 <body>
@@ -107,16 +108,15 @@
 				</table>
 				<a href ="bbs.jsp" class="btn btn-primary">목록</a>
 				<%
-					if(userID != null && userID.equals(bbs.getUserID())){
+					if(userID != null && userID.equals(bbs.getUserID())){ //유저 아이디가 로그인 상태고 로그인 아이디랑 게시글 쓴 아이디 동일하면 수정,삭제버튼나옴
 				%>		
 					<a href ="update.jsp?bbsID=<%=bbsID %>" class="btn btn-primary">수정</a>
-					<a href ="deleteAction.jsp?bbsID=<%=bbsID %>" class="btn btn-primary">삭제</a>
+					<a onclick="return confirm('정말로 삭제하시겠습니까?')" href ="deleteAction.jsp?bbsID=<%=bbsID %>" class="btn btn-primary">삭제</a>
 					
 				<%		
 					}
 				
 				%>
-				<input type="submit" class="btn btn-prumary pull-right" value="글쓰기"> 
 		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

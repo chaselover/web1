@@ -15,11 +15,11 @@
 </head>
 <body>
 	<%
-		String userID	=	null; //할당된 세션 아이디를 담을 수 있게함.
+		String userID = null; //할당된 세션 아이디를 담을 수 있게함.
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
 		}
-		if (userID != null){
+		if (userID == null){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인을 하세요')");
