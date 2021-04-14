@@ -1,0 +1,107 @@
+/*default값 정의하고 나중에 var(변수명)으로 불러올수있는 css var*/
+:root {
+  --text-color: #f0f4f5;
+  --background-color: #263343;
+  --accent-color: #d49466;
+}
+
+body {
+  margin: 0;
+  font-family: "Antonio";
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+/*플렉스박스*/
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #263343;
+  padding: 8px 12px;
+}
+
+.navbar__logo {
+  font-size: 24px;
+  color: white;
+}
+
+.navbar__logo i {
+  color: #d49466;
+}
+
+.navbar__menu {
+  display: flex; /*리스트가 세로-> 가로 */
+  list-style: none; /* 리스트 형식이라 ;;;로 구분된 요소들 형식 삭제*/
+  padding-left: 0;
+}
+
+.navbar__menu li {
+  /*메뉴 안의 리스트 요소 스타일 */
+  padding: 8px 12px; /*마진으로하면 클릭범위 작아짐. 패딩하면 클릭 범위 늘어남 */
+}
+
+.navbar__menu li:hover {
+  /*메뉴 안의 리스트에 손 올리면 주황색 박스 */
+  background-color: #d49466;
+  border-radius: 4px;
+}
+
+.navbar__icons {
+  list-style: none;
+  color: rgb(221, 220, 220);
+  display: flex;
+  padding-left: 0;
+}
+
+.navbar__icons li {
+  padding: 8px 12px;
+}
+
+/*맥락과 관계없이 위치고정은 position absolute*/
+.navbar__toogleBtn {
+  display: none;
+  position: absolute;
+  right: 32px;
+  font-size: 24px;
+  color: #d49466;
+}
+
+/*반응형 웹은 media query 사용*/
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-starts;
+    padding: 8px 24px;
+  }
+
+  .navbar__menu {
+    display: none; /*버튼 누르기전엔 안보이게*/
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /*중앙정렬했는데 중앙에 안올때는 div가 작아서 그럼.키워주면됨 */
+  }
+
+  .navbar__menu li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .navbar__icons {
+    display: none;
+    justify-content: center;
+    width: 100%;
+  }
+  /*크기 줄였을때만 보이게*/
+  .navbar__toogleBtn {
+    display: block;
+  }
+  /*엑티브일때는 보여줌 플렉스박스로*/
+  .navbar__menu.active,
+  .navbar__icons.active {
+    display: flex;
+  }
+}
