@@ -1,6 +1,8 @@
 .form,
 .greetings {
   display: none;
+  color: white;
+  margin: 5px;
 }
 
 .showing {
@@ -9,6 +11,9 @@
 
 body {
   background-color: #34495e;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 @keyframes fadeIn {
@@ -28,4 +33,25 @@ body {
   height: 100%;
   z-index: -1;
   animation: fadeIn 0.5s linear;
+}
+
+.bundle {
+  position: absolute;
+  color: white;
+  width: 200px;
+  height: 200px;
+  align-content: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+}
+
+.clock {
+  margin: 10px;
+}
+
+.js-toDoList {
+  margin: 5px;
 }
