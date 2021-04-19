@@ -1,0 +1,244 @@
+:root {
+  /* color */
+  --white-color: #fff;
+  --black-color: #140a00;
+  --blue-color: #045fd4;
+  --red-color: #ff0000;
+  --grey-dark-color: #909090;
+  --grey-light-color: #e0e0e0;
+  /* size */
+  --side-padding: 12px;
+  --avatat-size: 36px;
+
+  /* font size */
+  --font-large: 18px;
+  --font-medium: 14px;
+  --font-small: 12px;
+  --font-micro: 10px;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Roboto;
+}
+/* 해시태그 옆에 점 점 으로 리스트모양나옴 */
+ul {
+  list-style: none;
+}
+
+button,
+button:focus {
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+header {
+  display: flex;
+  justify-content: space-between; /*양옆으로 붙어서 정렬*/
+  padding: var(--side-padding);
+  background-color: var(--black-color);
+  color: var(--white-color);
+}
+
+header .logo {
+  font-size: var(--font-large);
+}
+
+header .logo i {
+  color: var(--red-color);
+}
+
+header .icons .fa-search {
+  margin-right: var(--side-padding);
+}
+
+/* sass  less 라이브러리 쓰면 header안쪽에 묶어서(모듈화) 작성시킬수있음*/
+/* react 쓸때는 PostCSS*/
+/* 순수CSS를 쓰면서 연습하다가 넘어가면 그 유용함을 정확히 알수있음,. */
+
+.player {
+  position: sticky; /*position은 늘 그 위치도 정해줘야함.(top0)*/
+  top: 0;
+  text-align: center;
+  background-color: var(--black-color);
+}
+
+.player video {
+  width: 100%;
+  height: 100%;
+  max-width: 1000px;
+}
+/* 바디 바로 안에있는 인포만 속성주기 */
+.info {
+  padding: var(--side-padding);
+}
+
+.info .metadata .hashtags {
+  display: flex;
+  font-size: var(--font-small);
+  color: var(--blue-color);
+}
+
+.info .metadata .hashtags li {
+  margin-right: var(--side-padding);
+}
+
+.info .metadata .titleAndButton {
+  display: flex;
+}
+
+/* 두줄만 나오다가 버튼 눌러야 3줄 이상 나오게 하기위한 제한*/
+.info .metadata .titleAndButton .title {
+  font-size: --font-medium;
+  margin-right: var(--side-padding);
+}
+
+/* .title.clamp붙혀놔야됨(한 클래스 안에 있는 것들) */
+.info .metadata .titleAndButton .title.clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.info .metadata .titleAndButton .moreBtn {
+  height: 100%;
+  transition: transform 300ms ease-in-out;
+}
+
+.info .metadata .titleAndButton .moreBtn.clicked {
+  transform: rotate(180deg);
+}
+
+.info .metadata .views {
+  font-size: var(--font-small);
+  color: var(--grey-dark-color);
+}
+
+.info .actions {
+  display: flex;
+  justify-content: space-around;
+  margin: var(--side-padding);
+  list-style: none;
+}
+
+.info .actions button {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--font-small);
+  color: var(--grey-dark-color);
+  background-color: var(--white-color);
+}
+
+.info .actions button i {
+  margin: 0 auto;
+  margin-bottom: calc(var(--side-padding) / 2);
+  font-size: 16px;
+}
+
+.info .actions button i.active {
+  color: var(--blue-color);
+}
+
+.info .channel {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--grey-light-color);
+  border-bottom: 1px solid var(--grey-light-color);
+}
+
+.info .channel .metadata {
+  display: flex;
+  align-items: center; /*수직으로 가운데정렬*/
+}
+
+.info .channel .metadata .info {
+  display: flex;
+  flex-direction: column;
+}
+.info .channel .metadata img {
+  width: var(--avatat-size);
+  height: var(--avatat-size);
+  border-radius: 50%;
+}
+
+.info .channel .metadata .info .name {
+  font-size: var(--font-medium);
+}
+
+.info .channel.metadata .info .subscribers {
+  font-size: var(--font-small);
+  color: var(--grey-dark-color);
+}
+
+/* 대문자 빨간색 */
+.info .channel .subscribe {
+  text-transform: uppercase;
+  color: var(--red-color);
+  font-size: var(--font-medium);
+}
+
+.upNext {
+  padding: 0 var(--side-padding);
+}
+/* 자식 노드 셀렉터 > (바로 뒤에 따라오는 애들만 적용 */
+.upNext > .title {
+  font-size: var(--font-medium);
+  color: var(--grey-dark-color);
+  margin-bottom: calc(var(--side-padding) / 2);
+}
+
+.upNext .item {
+  display: flex;
+  margin-top: var(--side-padding);
+}
+
+.upNext .item .img {
+  flex: 1 1 35%;
+  margin-right: var(--side-padding);
+}
+
+.upNext .item .img img {
+  width: 100%;
+}
+
+.upNext .item .info {
+  flex: 1 1 60%;
+}
+
+.upNext .item .moreBtn {
+  height: 100%;
+  flex: 1 1 5%;
+}
+
+.upNext .item .info {
+  display: flex;
+  flex-direction: column;
+}
+
+.upNext .item .info .title {
+  font-size: var(--font-small);
+}
+
+.upNext .item .info .name,
+.upNext .item .info .views {
+  font-size: var(--font-micro);
+  color: var(--grey-dark-color);
+}
+
+.infoAndUpNext {
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 768px) {
+  .infoAndUpNext {
+    flex-direction: row;
+    margin: var(--side-padding) 0;
+  }
+}
