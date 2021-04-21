@@ -1,0 +1,131 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+/* 높이를 쉽게 다루기 위할때 flex를 많이줌 */
+.wrapper{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+/* flex는 비율로 크기를 조정. 여러 항목에 비율로 입력해서 씀. */
+.user-container {
+    background: #a9bdce;
+    flex: 1;
+    display:flex;
+    /* 컨텐츠 플랙스 가로 왼쪽시작(center도 줄수있음), 세로 센터 */
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.user-container label{
+    font-size: 14px;
+    margin-right: 1rem;
+}
+
+.user-container input{
+    border-radius: 3px;
+    border: none;
+    height: 100%;
+}
+/* 실질적 채팅하는 부분 */
+.display-container {
+    flex: 12;
+    background: #b2c7d9;
+    /* 채팅 많이 일어나면 스크롤이 이뤄지도록함. */
+    overflow-y: scroll;
+}
+
+.input-container{
+    flex:1;
+    display: flex;
+    justify-content: stretch;
+    align-items: center;
+}
+
+/* span이 inputcontainer에 붙어있어서 align items해도 가운데로 안감. */
+.input-container span{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 0.3rem;
+}
+
+.chatting-input{
+    font-size: 12px;
+    height: 100%;
+    flex: 8;
+    border: none;
+}
+.send-button{
+    flex: 1;
+    background: #ffeb33;
+    height: 100%;
+    border-radius: 3px;
+}
+
+
+.chatting-list li{
+    width: 90%;
+    padding:0.3rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    margin-top: 0.5rem;
+}
+.profile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex:1;
+}
+.profile .user{
+    font-size: 10px;
+    margin-bottom:0.3rem;
+}
+.profile .image{
+    /* 50퍼센트주면 동그라미됨. */
+    border-radius: 50%;
+    /* onjectfit은 틀에 사진이 알맞게 들어가도록 함 */
+    object-fit: cover;
+    width: 50px;
+    height: 50px;
+
+}
+
+.message{
+    border-radius: 5px;
+    padding: 0.5rem;
+    font-size: 12px;
+    margin: 0 5px;
+    flex: 7;
+}
+
+.time{
+    font-size:10px;
+    /* 위아래 0 좌우 5px */
+    margin: 0 5px;
+}
+/* 우리가 보낸메세지는 flex에서 역순으로 생성되도록 */
+.sent{
+    flex-direction: row-reverse;
+    /* float로 오른쪽으로 붙도록 */
+    float: right;
+}
+.sent .message{
+    background: #ffeb33;
+}
+
+.received .message{
+    background: white;
+}
