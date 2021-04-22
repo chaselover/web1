@@ -1,0 +1,136 @@
+/* 처음은 초기화 */
+* {
+  margin: 0;
+  padding: 0;
+}
+:root {
+  --color-facebook: #3b5998;
+}
+
+.wrap-all {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.play-time {
+  font-size: 3rem;
+  margin-top: 2rem;
+  color: var(--color-facebook);
+}
+/* 그리드 속성을 줘서 항상 일정한 갯수가 정렬이 되도록 함(반응형x) */
+ul {
+  margin-top: 1rem;
+  list-style: none;
+  border: 3px solid var(--color-facebook);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* 하나의 요소fr을 4번 반복하겠다. */
+}
+
+li {
+  width: 100px;
+  height: 100px;
+  border: 1px solid red;
+  color: #fff;
+  /* 이미지를 동적 js를 이용해 넣어주는 방법도 공부해보기 */
+  background: url("http://placeimg.com/400/400/any");
+}
+
+.start-button {
+  background: var(--color-facebook);
+  color: #fff;
+  border: none;
+  padding: 1rem 2rem;
+  /* 세로패딩, 가로패딩 */
+  margin-top: 1rem;
+}
+
+.game-text {
+  position: absolute;
+  font-size: 45px;
+  color: #67c23a;
+  text-shadow: 1px 1px rgd(0, 0, 0, 0.5);
+  display: none;
+}
+/* 리스트들이 각각 100px이기때문에 100씩 이동시켜주면 연결된것처럼 보임. */
+.list0 {
+  background-position-x: 0px;
+  background-position-y: 0px;
+}
+
+.list1 {
+  background-position-x: -100px;
+  background-position-y: 0px;
+}
+
+.list2 {
+  background-position-x: -200px;
+  background-position-y: 0px;
+}
+
+.list3 {
+  background-position-x: -300px;
+  background-position-y: 0px;
+}
+
+.list4 {
+  background-position-x: 0px;
+  background-position-y: -100px;
+}
+
+.list5 {
+  background-position-x: -100px;
+  background-position-y: -100px;
+}
+
+.list6 {
+  background-position-x: -200px;
+  background-position-y: -100px;
+}
+
+.list7 {
+  background-position-x: -300px;
+  background-position-y: -100px;
+}
+
+.list8 {
+  background-position-x: 0px;
+  background-position-y: -200px;
+}
+
+.list9 {
+  background-position-x: -100px;
+  background-position-y: -200px;
+}
+
+.list10 {
+  background-position-x: -200px;
+  background-position-y: -200px;
+}
+
+.list11 {
+  background-position-x: -300px;
+  background-position-y: -200px;
+}
+
+.list12 {
+  background-position-x: 0px;
+  background-position-y: -300px;
+}
+
+.list13 {
+  background-position-x: -100px;
+  background-position-y: -300px;
+}
+
+.list14 {
+  background-position-x: -200px;
+  background-position-y: -300px;
+}
+
+.list15 {
+  background-position-x: -300px;
+  background-position-y: -300px;
+}
