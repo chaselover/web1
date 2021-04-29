@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.0-beta.1/redux.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      .container {
+        border: 5px solid black;
+        padding: 10px;
+      }
+    </style>
+    <div id="red"></div>
+    <div id="blue"></div>
+    <div id="green"></div>
+    <script>
+      // 1.store만들고 reducer를 주입
+      //   action이 일어나면 dispatch는 이전의 state값과 action값으로 reducer를 호출함.
+      // reducer는 그것을 분석해서 최종 state값을 반환함
+      //   +++immutable을 지켜 복사본(object.assign({빈객체},{name:'egoing'},{city:'seoul'}))을 return하도록 하자.
+      // 중요한건 첫번째인자에 빈객체!!!!를 주어 거기에 다른 객체값들이 담길수있게 하는것!!!!!
+      function reducer(state, action) {
+        // store초깃값 상태없을때 설정할 객체 설정
+        if (state === undefined) {
+          return { color: "yellow" };
+        }
+        var newState;
+        // 빈객체에 state를 넣고 color값을 red로 덮어씀.
+        if (action.type === "CHANGE_COLOR") {
+          newState = Object.assign({}, state, { color: action.color });
+        }
+        // reducer에 콘솔을 해서 모든 변화를 감시,통제할수있음.
+        console.log(action.type, action, state, newState);
+        return newState;
+      }
+      //   reducer를 인자로 받고 그 옆은 시간여행 tool(redux devtools)
+      var store = Redux.createStore(
+        reducer,
+        window.__REDUX_DEVTOOLS_EXTENSION__ &&
+          window.__REDUX_DEVTOOLS_EXTENSION__()
+      );
+
+      // dispatch에 action 객체를 넣어주는데 type은 반드시 있어야함.
+      function red() {
+        var state = store.getState();
+        document.querySelector("#red").innerHTML = `
+            <div class="container" id="component_red" style="background-color:${state.color}">
+              <h1>red</h1>
+              <input
+                type="button"
+                value="fire"
+                onclick="store.dispatch({type:'CHANGE_COLOR', color:'red'});"
+              >
+            </div>
+          `;
+      }
+      store.subscribe(red);
+      red();
+      function green() {
+        var state = store.getState();
+        document.querySelector("#green").innerHTML = `
+            <div class="container" id="component_green" style="background-color:${state.color}">
+              <h1>green</h1>
+              <input
+                type="button"
+                value="fire"
+                onclick="store.dispatch({type:'CHANGE_COLOR', color:'green'});"
+              >
+            </div>
+          `;
+      }
+      store.subscribe(green);
+      green();
+      function blue() {
+        var state = store.getState();
+        document.querySelector("#blue").innerHTML = `
+            <div class="container" id="component_blue" style="background-color:${state.color}">
+              <h1>blue</h1>
+              <input
+                type="button"
+                value="fire"
+                onclick="store.dispatch({type:'CHANGE_COLOR', color:'blue'});"
+              >
+            </div>
+          `;
+      }
+      store.subscribe(blue);
+      blue();
+
+      //   subscribe에 render를 등록하면 dispatch할때마다red()호출가능.
+    </script>
+  </body>
+</html>

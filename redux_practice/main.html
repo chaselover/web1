@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.0-beta.1/redux.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="subject"></div>
+    <div id="toc"></div>
+    <div id="control"></div>
+    <div id="content"></div>
+    <!-- 모듈화하면 재사용가능(콤포넌트 만들기)-->
+    <script>
+      function subject() {
+        document.querySelector("#subject").innerHTML = `
+            <header>
+            <h1>WEB</h1>
+            Hello, WED!
+            </header>
+            `;
+      }
+      //   state기반 component를 만들자.
+      function TOC() {
+        var state = store.getState();
+        var i = 0;
+        var liTags = "";
+        while (i < state.contents.length) {
+          liTags =
+            liTags +
+            `
+                <li>
+                    <a onclick="
+                        event.preventDefault();
+                        var action = {type:'SELECT', id:${state.contents[i].id}};
+                        store.dispatch(action);
+                        " href="${state.contents[i].id}">
+                        ${state.contents[i].title}
+                    </a>
+                </li>
+            `;
+          i = i + 1;
+        }
+        document.querySelector("#toc").innerHTML = `
+            <nav>
+            <ol>${liTags}
+            </ol>
+            </nav>
+            `;
+      }
+      function control() {
+        document.querySelector("#control").innerHTML = `
+            <ul>
+            <li><a onclick="
+                event.preventDefault()
+                store.dispatch({
+                    type:'CHANGE_MODE',
+                    mode:'create'
+                });
+                " href="/create" class="">create</a></li>
+            <li><input onclick="
+                    store.dispatch({type:'DELETE'})
+                "type="button" value="delete"></input></li>
+            </ul>
+            
+            `;
+      }
+      //   this는 form. 그 안의 title은 input.
+      function article() {
+        var state = store.getState();
+        if (state.mode === "create") {
+          document.querySelector("#content").innerHTML = `
+            <article>
+                <form onsubmit="
+                event.preventDefault();
+                var _title = this.title.value;
+                var _desc = this.desc.value;
+                store.dispatch({
+                    type:'CREATE',
+                    title:_title,
+                    desc:_desc,
+                })
+                ">
+                    <p>
+                        <input type="text" name="title" placeholder="title">
+                    </p>
+                    <p>
+                        <textarea name="desc"
+                        placeholder="description"></textarea>
+                    </p>
+                    <p>
+                        <input type="submit">
+                    </p>
+                </form>
+            </article>
+            `;
+        } else if (state.mode === "read") {
+          var i = 0;
+          var aTitle, aDesc;
+          while (i < state.contents.length) {
+            if (state.contents[i].id === state.selected_id) {
+              aTitle = state.contents[i].title;
+              aDesc = state.contents[i].desc;
+              break;
+            }
+            i = i + 1;
+          }
+          document.querySelector("#content").innerHTML = `
+            <article>
+            <h2>${aTitle}</h2>
+            ${aDesc}
+            </article>
+            `;
+        } else if (state.mode === "welcome") {
+          document.querySelector("#content").innerHTML = `
+            <article>
+            <h2>Welcome</h2>
+            Hello, REdux!!
+            </article>
+            `;
+        }
+      }
+      //   reducer를 통해 state,action에 따른 newState를 설계(immutality에 따라)
+      function reducer(state, action) {
+        if (state === undefined) {
+          return {
+            max_id: 2,
+            selected_id: 2,
+            mode: "welcome",
+            contents: [
+              { id: 1, title: "HTML", desc: "HTML is .." },
+              { id: 2, title: "CSS", desc: "CSS is .." },
+            ],
+          };
+        }
+        // concat은 배열 복제. 그리고 push해주면 됨.
+        // 배열복제는 concat,push,,,,객체복제는Object assign(빈거,넣을꺼, 새거)
+        var newState;
+        // 안바뀌면 무조건 reducer를 보면 됨.
+        if (action.type === "SELECT") {
+          newState = Object.assign({}, state, {
+            selected_id: action.id,
+            mode: "read",
+          });
+        } else if (action.type === "CREATE") {
+          var newMaxId = state.max_id + 1;
+          var newContents = state.contents.concat();
+          newContents.push({
+            id: newMaxId,
+            title: action.title,
+            desc: action.desc,
+          });
+          newState = Object.assign({}, state, {
+            max_id: newMaxId,
+            contents: newContents,
+            mode: "read",
+          });
+        } else if (action.type === "DELETE") {
+          var newContents = [];
+          var i = 0;
+          while (i < state.contents.length) {
+            if (state.selected_id === state.contents[i].id) {
+              newContents.push(state.contents[i]);
+              break;
+            }
+            i = i + 1;
+          }
+          newState = Object.assign({}, state, {
+            contents: newContents,
+            mode: "welcome",
+          });
+          //   모드를 dispatch로 받은 객체의 모드로 바꿔주는 것.(dispatch action을 받아 type에따른 mode를 변경)
+          // 해주고 해당 모드에 따라 state를 바꾸고 article을 구독으로 불러옴(getState해서 article을 작성함.)
+        } else if (action.type === "CHANGE_MODE") {
+          newState = Object.assign({}, state, {
+            mode: action.mode,
+          });
+        }
+        console.log(action, state, newState);
+        return newState;
+      }
+      var store = Redux.createStore(reducer);
+      //   article,을 구독시켜놓으면 state바뀔때 자동으로 state참조해서 UI를 새로그림.
+      // 이게 읽기기능(subscribe)
+      store.subscribe(article);
+      store.subscribe(TOC);
+      subject();
+      TOC();
+      control();
+      article();
+    </script>
+  </body>
+</html>
